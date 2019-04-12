@@ -28,23 +28,19 @@ namespace View
         public MainWindow()
         {
             InitializeComponent();
-            var puzzle = Puzzle.FromRowStrings(
-                "xxxxx",
-                "x...x",
-                "x...x",
-                "x...x",
-                "xxxxx"
-                );
-            var facade = new PiCrossFacade();
-            var playablePuzzle = facade.CreatePlayablePuzzle(puzzle);
 
-            playablePuzzle.Grid[new Vector2D(0, 0)].Contents.Value = Square.FILLED;
-            playablePuzzle.Grid[new Vector2D(0, 0)].Contents.Value = Square.FILLED;
+            vm = new ViewModel.ViewModelMainWindow();
 
-            PicrossControl.Grid = playablePuzzle.Grid;
-            PicrossControl.RowConstraints = playablePuzzle.RowConstraints;
+            this.DataContext = vm;
+
+            PicrossControl.Grid = vm.PlayablePuzzle.Grid;
+
+            PicrossControl.RowConstraints = vm.PlayablePuzzle.RowConstraints;
+            PicrossControl.ColumnConstraints = vm.PlayablePuzzle.ColumnConstraints;
 
         }
+
+        private ViewModel.ViewModelMainWindow vm;
     }
 
     public class SquareConverter : IValueConverter
