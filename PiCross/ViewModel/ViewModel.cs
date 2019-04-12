@@ -10,7 +10,7 @@ using Grid = DataStructures.Grid;
 
 namespace ViewModel
 {
-    class ViewModelMainWindow
+    public class ViewModelMainWindow
     {
         public ViewModelMainWindow()
         {
@@ -52,16 +52,8 @@ namespace ViewModel
 
             public EventHandler CanExecuteChange;
 
-            public bool CanExcecute()
-            {
-                return canExcecute;
-            }
+            public event EventHandler CanExecuteChanged;
 
-            public void Excecute(object parameter)
-            {
-                var square = parameter as IPlayablePuzzleSquare;
-                ChangeValue(square);
-            }
 
             private void ChangeValue(IPlayablePuzzleSquare square)
             {
@@ -73,6 +65,17 @@ namespace ViewModel
                 {
                     vm.PlayablePuzzle.Grid[square.Position].Contents.Value = Square.EMPTY;
                 }
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return canExcecute;
+            }
+
+            public void Execute(object parameter)
+            {
+                var square = parameter as IPlayablePuzzleSquare;
+                ChangeValue(square);
             }
         }
     }
