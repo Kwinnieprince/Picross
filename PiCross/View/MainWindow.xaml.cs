@@ -14,9 +14,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using ViewModel;
+
 
 namespace View
 {
+    using System.ComponentModel;
     using System.Globalization;
     using Grid = DataStructures.Grid;
     using size = DataStructures.Size;
@@ -63,6 +67,71 @@ namespace View
             else
             {
                 return Unknown;
+            }
+        }
+
+        public class Navigator : INotifyPropertyChanged
+        {
+            private Screen currentScreen;
+
+            public Navigator()
+            {
+                this.currentScreen = new StartScreen(this);
+            }
+
+            public Screen CurrentScreen
+            {
+                get
+                {
+                    return CurrentScreen;
+                }
+                set
+                {
+                    this.CurrentScreen = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentScreen)));
+                }
+            }
+            public event PropertyChangedEventHandler PropertyChanged;
+        }
+
+        public abstract class Screen
+        {
+            protected readonly Navigator navigator;
+
+            protected Screen(Navigator navigator)
+            {
+                this.navigator = navigator;
+            }
+
+            protected void SwitchTo(Screen screen)
+            {
+                this.navigator.CurrentScreen = screen;
+            }
+        }
+
+        public class StartScreen : Screen
+        {
+            public StartScreen(Navigator navigator) : base(navigator)
+            {
+                GoToChooseScreen = new EasyCommand(() => SwitchTo(new ChooseScreen(navigator)));
+            }
+            public ICommand GoToChooseScreen { get; }
+        }
+
+        public class ChooseScreen : Screen
+        {
+            public ChooseScreen(Navigator navigator) : base(navigator)
+            {
+                GoToGameScreen = new EasyCommand(() => SwitchTo(new MainScreen(navigator)));
+            }
+
+            public ICommand GoToGameScreen { get; }
+        }
+
+        public class MainScreen : Screen
+        {
+            public MainScreen(Navigator navigator) : base(navigator)
+            {
             }
         }
 

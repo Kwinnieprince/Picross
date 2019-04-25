@@ -24,7 +24,7 @@
             </controls:PiCrossControl.SquareTemplate>
             <controls:PiCrossControl.RowConstraintsTemplate>
                 <DataTemplate>
-                    <ItemsControl ItemsSource="{Binding}">
+                    <ItemsControl ItemsSource="{Binding Values}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal" />
