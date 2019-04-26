@@ -72,7 +72,7 @@
                 </DataTemplate>
             </controls:PiCrossControl.ColumnConstraintsTemplate>
         </controls:PiCrossControl>
-        <Border HorizontalAlignment="Stretch" VerticalAlignment="Center" Padding="20">
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Center">
             <Border.Background>
                 <SolidColorBrush Color="#DDDDDD" Opacity=".5" />
             </Border.Background>
@@ -80,11 +80,10 @@
             <Border.Visibility>
                 <Binding Path="IsSolved.Value">
                     <Binding.Converter>
-                        <local:BoolConverter True="{x:Static Visibility.Hidden}" False="{x:Static Visibility.Visible}" />
+                        <local:BoolConverter True="{x:Static Visibility.Visible}" False="{x:Static Visibility.Hidden}" />
                     </Binding.Converter>
                 </Binding>
             </Border.Visibility>
         </Border>
     </Grid>
-
 </Window>
