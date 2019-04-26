@@ -1,4 +1,5 @@
-﻿using PiCross;
+﻿using Cells;
+using PiCross;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,15 @@ namespace ViewModel
             this.Facade = new PiCrossFacade();
 
             this.PlayablePuzzle = Facade.CreatePlayablePuzzle(this.Puzzle);
-
+            
             this.ClickCommand = new ClickRectangle(this);
+        }
+
+        public Cell<bool> IsSolved {
+            get
+            {
+                return PlayablePuzzle.IsSolved;
+            }
         }
 
         public Puzzle Puzzle;

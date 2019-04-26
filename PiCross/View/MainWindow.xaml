@@ -9,6 +9,7 @@
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
         <local:SquareConverter Empty="White" Filled="Black" Unknown="Gray" x:Key="converter"/>
+        <local:BoolConverter x:Key="boolConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -32,7 +33,15 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Width="32" Height="32" Text="{Binding Value}" />
+                                <TextBlock Width="32" Height="32" Text="{Binding Value}">
+                                    <TextBlock.Background>
+                                        <Binding Path="IsSatisfied.Value">
+                                            <Binding.Converter>
+                                                <local:BoolConverter True="Transparant" False="Purple" />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </TextBlock.Background>
+                                </TextBlock>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -48,12 +57,34 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Width="32" Height="32" Text="{Binding Value}" />
+                                <TextBlock Width="32" Height="32" Text="{Binding Value}">
+                                    <TextBlock.Background>
+                                        <Binding Path="IsSatisfied.Value">
+                                            <Binding.Converter>
+                                                <local:BoolConverter True="Transparant" False="Purple" />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </TextBlock.Background>
+                                </TextBlock>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </DataTemplate>
             </controls:PiCrossControl.ColumnConstraintsTemplate>
         </controls:PiCrossControl>
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Center" Padding="20">
+            <Border.Background>
+                <SolidColorBrush Color="#DDDDDD" Opacity=".5" />
+            </Border.Background>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="100" Text="Solved 💩" Foreground="Yellow" FontWeight="Bold" />
+            <Border.Visibility>
+                <Binding Path="IsSolved.Value">
+                    <Binding.Converter>
+                        <local:BoolConverter True="{x:Static Visibility.Hidden}" False="{x:Static Visibility.Visible}" />
+                    </Binding.Converter>
+                </Binding>
+            </Border.Visibility>
+        </Border>
     </Grid>
+
 </Window>
