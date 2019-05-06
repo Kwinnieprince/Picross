@@ -22,12 +22,14 @@ namespace View
 {
     using System.ComponentModel;
     using System.Globalization;
+    using static View.Converters.SquareConverter;
+    using static View.Converters.BoolConverter;
     using Grid = DataStructures.Grid;
     using size = DataStructures.Size;
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : UserControl
     {
         public MainWindow()
         {
@@ -45,126 +47,7 @@ namespace View
         }
 
         private ViewModel.ViewModelMainWindow vm;
+
+    
     }
-
-    public class SquareConverter : IValueConverter
-    {
-        public object Filled { get; set; }
-        public object Empty { get; set; }
-        public object Unknown { get; set; }
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var square = (Square)value;
-            if (square == Square.EMPTY)
-            {
-                return Empty;
-            }
-            else if (square == Square.FILLED)
-            {
-                return Filled;
-            }
-            else
-            {
-                return Unknown;
-            }
-        }
-
-        public class Navigator : INotifyPropertyChanged
-        {
-            private Screen currentScreen;
-
-            public Navigator()
-            {
-                this.currentScreen = new StartScreen(this);
-            }
-
-            public Screen CurrentScreen
-            {
-                get
-                {
-                    return CurrentScreen;
-                }
-                set
-                {
-                    this.CurrentScreen = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentScreen)));
-                }
-            }
-            public event PropertyChangedEventHandler PropertyChanged;
-        }
-
-        public abstract class Screen
-        {
-            protected readonly Navigator navigator;
-
-            protected Screen(Navigator navigator)
-            {
-                this.navigator = navigator;
-            }
-
-            protected void SwitchTo(Screen screen)
-            {
-                this.navigator.CurrentScreen = screen;
-            }
-        }
-
-        public class StartScreen : Screen
-        {
-            public StartScreen(Navigator navigator) : base(navigator)
-            {
-                GoToChooseScreen = new EasyCommand(() => SwitchTo(new ChooseScreen(navigator)));
-            }
-            public ICommand GoToChooseScreen { get; }
-        }
-
-        public class ChooseScreen : Screen
-        {
-            public ChooseScreen(Navigator navigator) : base(navigator)
-            {
-                GoToGameScreen = new EasyCommand(() => SwitchTo(new MainScreen(navigator)));
-            }
-
-            public ICommand GoToGameScreen { get; }
-        }
-
-        public class MainScreen : Screen
-        {
-            public MainScreen(Navigator navigator) : base(navigator)
-            {
-            }
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class BoolConverter : IValueConverter
-    {
-        public object True { get; set; }
-
-        public object False { get; set; }
-
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            var b = (bool)value;
-
-            if (b)
-            {
-                return True;
-            }
-            else
-            {
-                return False;
-            }
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
 }

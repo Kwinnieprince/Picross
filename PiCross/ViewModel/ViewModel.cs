@@ -2,6 +2,7 @@
 using PiCross;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,11 +27,12 @@ namespace ViewModel
             this.Facade = new PiCrossFacade();
 
             this.PlayablePuzzle = Facade.CreatePlayablePuzzle(this.Puzzle);
-            
+
             this.ClickCommand = new ClickRectangle(this);
         }
 
-        public Cell<bool> IsSolved {
+        public Cell<bool> IsSolved
+        {
             get
             {
                 return PlayablePuzzle.IsSolved;

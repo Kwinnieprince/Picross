@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace View
+namespace View.Controls
 {
     /// <summary>
-    /// Interaction logic for StartScreen.xaml
+    /// Interaction logic for StartScreenControls.xaml
     /// </summary>
-    public partial class StartScreen : Window
+    public partial class StartScreenControl : UserControl
     {
-        public StartScreen()
+        public StartScreenControl()
         {
             InitializeComponent();
         }
