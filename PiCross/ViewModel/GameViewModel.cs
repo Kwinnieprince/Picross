@@ -29,14 +29,19 @@ namespace ViewModel
 
             this.PlayablePuzzle = Facade.CreatePlayablePuzzle(this.Puzzle);
 
-            this.ClickCommand = new ClickRectangle(this);
+            this.Start(mainWindowViewModel, PlayablePuzzle);
+        }
+
+        public GameViewModel(MainWindowViewModel mainWindowViewModel, IPlayablePuzzle playablePuzzle)
+        {
+            this.Start(mainWindowViewModel, PlayablePuzzle);
         }
 
         public void Start(MainWindowViewModel mainWindowViewModel, IPlayablePuzzle puzzle)
         {
             this.Vm = mainWindowViewModel;
             this.PlayablePuzzle = puzzle;
-            this.Grid = this.PlayablePuzzle.Grid.Map(square => new PlayablePuzzleSquareViewModel(square)).Copy();
+            this.Grid = this.PlayablePuzzle.Grid.Map(puzzleSquare => new PlayablePuzzleSquareViewModel(puzzleSquare)).Copy();
         }
 
         public Cell<bool> IsSolved
@@ -77,14 +82,7 @@ namespace ViewModel
 
             private void ChangeValue(IPlayablePuzzleSquare square)
             {
-                if (vm.PlayablePuzzle.Grid[square.Position].Contents.Value == Square.EMPTY || vm.PlayablePuzzle.Grid[square.Position].Contents.Value == Square.UNKNOWN)
-                {
-                    vm.PlayablePuzzle.Grid[square.Position].Contents.Value = Square.FILLED;
-                }
-                else
-                {
-                    vm.PlayablePuzzle.Grid[square.Position].Contents.Value = Square.EMPTY;
-                }
+               
             }
 
             public bool CanExecute(object parameter)

@@ -27,27 +27,14 @@ namespace View.Windows
 {
 
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for GameWindow.xaml
     /// </summary>
     public partial class GameWindow : UserControl
     {
         public GameWindow()
         {
             InitializeComponent();
-
-            //vm = mainWindowViewModel;
-
-            //this.DataContext = vm;
-            
-            //PicrossControl.Grid = vm.PlayablePuzzle.Grid;
-
-            //PicrossControl.RowConstraints = vm.PlayablePuzzle.RowConstraints;
-            //PicrossControl.ColumnConstraints = vm.PlayablePuzzle.ColumnConstraints;
-
         }
-
-        //private MainWindowViewModel vm;
-
     
     }
 }

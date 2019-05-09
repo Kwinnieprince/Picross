@@ -59,6 +59,7 @@
       <DependentUpon>StartScreenControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolConverter.cs" />
+    <Compile Include="Converters\ConstraintConverter.cs" />
     <Compile Include="Converters\SquareConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

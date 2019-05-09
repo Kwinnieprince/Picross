@@ -10,6 +10,7 @@
         Height="350" Width="525">
     <UserControl.Resources>
         <converters:SquareConverter Empty="White" Filled="Black" Unknown="Gray" x:Key="converter"/>
+        <converters:ConstraintConverter True="Transparent" False="Black" x:Key="constraintConverter"/>
         <converters:BoolConverter x:Key="boolConverter"/>
     </UserControl.Resources>
 
@@ -21,10 +22,10 @@
 
         <TextBlock Text="PiCross" Grid.Row="0" HorizontalAlignment="Center" FontSize="15" FontWeight="DemiBold" Padding="10 13 10 10" />
 
-        <controls:PiCrossControl x:Name="PicrossControl" Grid.Row="1" HorizontalAlignment="Center">
+        <controls:PiCrossControl x:Name="PicrossControl"  Grid.Row="1" HorizontalAlignment="Center" Grid="{Binding Grid}" RowConstraints="{Binding PlayablePuzzle.RowConstraints}" ColumnConstraints="{Binding PlayablePuzzle.ColumnConstraints}">
             <controls:PiCrossControl.SquareTemplate>
                 <DataTemplate>
-                    <Button CommandParameter="{Binding Square}" Command="{Binding Cycle}">
+                    <Button CommandParameter="{Binding PuzzleSquare}" Command="{Binding Cycle}">
                         <Button.Content>
                             <Rectangle Width="32" Height="32" Stroke="Black" Fill="{Binding Contents.Value, Converter={StaticResource converter}}"/>
                         </Button.Content>
@@ -41,7 +42,7 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Width="32" Height="32" Text="{Binding Value}">
+                                <TextBlock Width="32" Height="32" Text="{Binding Value}" Foreground="{Binding IsSatisfied.Value, Converter={StaticResource constraintConverter}}">
                                     <TextBlock.Background>
                                         <Binding Path="IsSatisfied.Value">
                                             <Binding.Converter>
@@ -65,7 +66,7 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Width="32" Height="32" Text="{Binding Value}">
+                                <TextBlock Width="32" Height="32" Text="{Binding Value}" Foreground="{Binding IsSatisfied.Value, Converter={StaticResource constraintConverter}}">
                                     <TextBlock.Background>
                                         <Binding Path="IsSatisfied.Value">
                                             <Binding.Converter>

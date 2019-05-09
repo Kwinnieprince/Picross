@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PiCross;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -33,6 +34,11 @@ namespace ViewModel
         public void StartGame()
         {
             this.ActiveWindow = new GameViewModel(this);
+        }
+
+        public void StartGame(IPlayablePuzzle puzzle)
+        {
+            this.ActiveWindow = new GameViewModel(this, puzzle);
         }
 
         public void ChooseGame()
