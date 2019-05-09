@@ -10,12 +10,15 @@ namespace ViewModel
 {
     public class StartScreenViewModel
     {
-        public StartScreenViewModel()
+        public StartScreenViewModel(MainWindowViewModel mainWindowView)
         {
-            this.Start = new StartCommand();
-            this.Choose = new ChooseCommand();
-            this.Quit = new QuitCommand();
+            this.vm = mainWindowView;
+            this.Start = new StartCommand(this.vm);
+            this.Choose = new ChooseCommand(this.vm);
+            this.Quit = new QuitCommand(this.vm);
         }
+
+        private MainWindowViewModel vm { get; }
 
         public ICommand Start { get; }
 
@@ -23,34 +26,19 @@ namespace ViewModel
 
         public ICommand Quit { get; }
 
-        
+        public event PropertyChangedEventHandler propertyChanged;
     }
     public class StartCommand : ICommand
     {
-
-        public event PropertyChangedEventHandler propertyChanged;
-
-        private object activeWindow;
-
-        public object ActiveWindow
-        {
-            get
-            {
-                return activeWindow;
-            }
-
-            set
-            {
-                activeWindow = value;
-                propertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(activeWindow)));
-            }
-        }
+        public object activewindow;
 
         public event EventHandler CanExecuteChanged;
+        public MainWindowViewModel mainWindowViewModel;
         private bool canExecute;
 
-        public StartCommand()
+        public StartCommand(MainWindowViewModel vm)
         {
+            mainWindowViewModel = vm;
             canExecute = true;
         }
 
@@ -61,14 +49,9 @@ namespace ViewModel
 
         public void Execute(object parameter)
         {
-            //startScreenViewModel.startGame();
-            this.activeWindow = new ViewModelMainWindow();
+            mainWindowViewModel.StartGame();
         }
 
-        public void chooseGame()
-        {
-            this.activeWindow = new ViewModelMainWindow();
-        }
 
     }
     public class ChooseCommand : ICommand
@@ -76,28 +59,13 @@ namespace ViewModel
 
         public event PropertyChangedEventHandler propertyChanged;
 
-        private object activeWindow;
-
-        public object ActiveWindow
-        {
-            get
-            {
-                return activeWindow;
-            }
-
-            set
-            {
-                activeWindow = value;
-                propertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(activeWindow)));
-            }
-        }
-
         public event EventHandler CanExecuteChanged;
-        private ViewModelMainWindow viewModelMainWindow;
+        public MainWindowViewModel mainWindowViewModel;
         private bool canExecute;
 
-        public ChooseCommand()
+        public ChooseCommand(MainWindowViewModel vm)
         {
+            mainWindowViewModel = vm;
             canExecute = true;
         }
 
@@ -108,7 +76,7 @@ namespace ViewModel
 
         public void Execute(object parameter)
         {
-            this.activeWindow = new ViewModelMainWindow();
+            mainWindowViewModel.ChooseGame();
         }
     }
 
@@ -134,10 +102,10 @@ namespace ViewModel
         }
 
         public event EventHandler CanExecuteChanged;
-        private ViewModelMainWindow viewModelMainWindow;
+        public MainWindowViewModel mainWindowViewModel;
         private bool canExecute;
 
-        public QuitCommand()
+        public QuitCommand(MainWindowViewModel vm)
         {
             //viewModelMainWindow = vm;
             canExecute = true;

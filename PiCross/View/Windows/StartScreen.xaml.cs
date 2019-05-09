@@ -13,12 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ViewModel;
 
-namespace View
+namespace View.Windows
 {
     /// <summary>
     /// Interaction logic for StartScreen.xaml
     /// </summary>
-    public partial class StartScreen : Window
+    public partial class StartScreen : UserControl
     {
         
 

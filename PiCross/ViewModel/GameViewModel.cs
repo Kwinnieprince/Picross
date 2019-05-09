@@ -1,4 +1,5 @@
 ﻿using Cells;
+using DataStructures;
 using PiCross;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ using Grid = DataStructures.Grid;
 
 namespace ViewModel
 {
-    public class ViewModelMainWindow
+    public class GameViewModel
     {
-        public ViewModelMainWindow()
+        public GameViewModel(MainWindowViewModel mainWindowViewModel)
         {
             this.Puzzle = Puzzle.FromRowStrings(
                 "xxxxx",
@@ -31,6 +32,13 @@ namespace ViewModel
             this.ClickCommand = new ClickRectangle(this);
         }
 
+        public void Start(MainWindowViewModel mainWindowViewModel, IPlayablePuzzle puzzle)
+        {
+            this.Vm = mainWindowViewModel;
+            this.PlayablePuzzle = puzzle;
+            this.Grid = this.PlayablePuzzle.Grid.Map(square => new PlayablePuzzleSquareViewModel(square)).Copy();
+        }
+
         public Cell<bool> IsSolved
         {
             get
@@ -43,21 +51,23 @@ namespace ViewModel
 
         public PiCrossFacade Facade { get; }
 
-        public IPlayablePuzzle PlayablePuzzle { get; }
+        public IPlayablePuzzle PlayablePuzzle { get; private set; }
 
         public ICommand ClickCommand { get; private set; }
+        public MainWindowViewModel Vm { get; private set; }
+        public IGrid<PlayablePuzzleSquareViewModel> Grid { get; private set; }
 
         public class ClickRectangle : ICommand
         {
-            private ViewModelMainWindow viewModelMainWindow;
+            private GameViewModel viewModelMainWindow;
 
-            public ClickRectangle(ViewModelMainWindow viewModelMainWindow)
+            public ClickRectangle(GameViewModel viewModelMainWindow)
             {
                 vm = viewModelMainWindow;
                 canExcecute = true;
             }
 
-            private ViewModelMainWindow vm;
+            private GameViewModel vm;
             private bool canExcecute;
 
             public EventHandler CanExecuteChange;

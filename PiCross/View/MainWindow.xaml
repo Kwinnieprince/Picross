@@ -1,97 +1,12 @@
-﻿<UserControl x:Class="View.MainWindow"
+﻿<Window x:Class="View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
-        xmlns:controls="clr-namespace:View.Controls"
-        xmlns:converters="clr-namespace:View.Converters"
         mc:Ignorable="d"
-        Height="350" Width="525">
-    <UserControl.Resources>
-        <converters:SquareConverter Empty="White" Filled="Black" Unknown="Gray" x:Key="converter"/>
-        <converters:BoolConverter x:Key="boolConverter"/>
-    </UserControl.Resources>
-
+        Title="Picross game" Height="450" Width="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <TextBlock Text="PiCross" Grid.Row="0" HorizontalAlignment="Center" FontSize="15" FontWeight="DemiBold" Padding="10 13 10 10" />
-
-        <controls:PiCrossControl x:Name="PicrossControl" Grid.Row="1" HorizontalAlignment="Center">
-            <controls:PiCrossControl.SquareTemplate>
-                <DataTemplate>
-                    <Button CommandParameter="{Binding}" Command="{Binding DataContext.ClickCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
-                        <Button.Content>
-                            <Rectangle Width="32" Height="32" Stroke="Black" Fill="{Binding Contents.Value, Converter={StaticResource converter}}"/>
-                        </Button.Content>
-                    </Button>
-                </DataTemplate>
-            </controls:PiCrossControl.SquareTemplate>
-            <controls:PiCrossControl.RowConstraintsTemplate>
-                <DataTemplate>
-                    <ItemsControl ItemsSource="{Binding Values}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Width="32" Height="32" Text="{Binding Value}">
-                                    <TextBlock.Background>
-                                        <Binding Path="IsSatisfied.Value">
-                                            <Binding.Converter>
-                                                <converters:BoolConverter True="Transparant" False="Purple" />
-                                            </Binding.Converter>
-                                        </Binding>
-                                    </TextBlock.Background>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </DataTemplate>
-            </controls:PiCrossControl.RowConstraintsTemplate>
-            <controls:PiCrossControl.ColumnConstraintsTemplate>
-                <DataTemplate>
-                    <ItemsControl ItemsSource="{Binding Values}" >
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Width="32" Height="32" Text="{Binding Value}">
-                                    <TextBlock.Background>
-                                        <Binding Path="IsSatisfied.Value">
-                                            <Binding.Converter>
-                                                <converters:BoolConverter True="Transparant" False="Purple" />
-                                            </Binding.Converter>
-                                        </Binding>
-                                    </TextBlock.Background>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </DataTemplate>
-            </controls:PiCrossControl.ColumnConstraintsTemplate>
-        </controls:PiCrossControl>
-        <Border HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.RowSpan="2">
-            <Border.Background>
-                <SolidColorBrush Color="#DDDDDD" Opacity=".5" />
-            </Border.Background>
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="100" Text="Solved 💩" Foreground="Yellow" FontWeight="Bold" Grid.Row="1"/>
-            <Border.Visibility>
-                <Binding Path="IsSolved.Value">
-                    <Binding.Converter>
-                        <converters:BoolConverter True="{x:Static Visibility.Visible}" False="{x:Static Visibility.Hidden}" />
-                    </Binding.Converter>
-                </Binding>
-            </Border.Visibility>
-        </Border>
+        <ContentControl Content="{Binding ActiveWindow}"/>
     </Grid>
-</UserControl>
+</Window>

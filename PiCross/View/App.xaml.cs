@@ -18,12 +18,12 @@ namespace View
         {
             base.OnStartup(e);
 
-            var startScreen = new StartScreen();
+            var mainWindow = new MainWindow();
 
-            StartScreenViewModel vm = new StartScreenViewModel();
-            
-            startScreen.DataContext = vm;
-            startScreen.Show();
+            MainWindowViewModel vm = new MainWindowViewModel();
+
+            mainWindow.DataContext = vm;
+            mainWindow.Show();
         }
     }
 }
