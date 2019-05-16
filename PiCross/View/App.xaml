@@ -11,5 +11,8 @@
         <DataTemplate DataType="{x:Type viewmodel:GameViewModel}">
             <windows:GameWindow/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodel:ChooseWindowViewModel}">
+            <windows:ChooseWindow/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

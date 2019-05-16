@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChooseWindowViewModel.cs" />
     <Compile Include="EasyCommand.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="PlayablePuzzleSquareViewModel.cs" />

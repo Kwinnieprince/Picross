@@ -30,11 +30,19 @@ namespace ViewModel
             this.PlayablePuzzle = Facade.CreatePlayablePuzzle(this.Puzzle);
 
             this.Start(mainWindowViewModel, PlayablePuzzle);
+
+            this.BackCommand = new BackCommand(mainWindowViewModel);
+            this.QuitCommand = new QuitCommand(mainWindowViewModel);
         }
+
+        public ICommand BackCommand { get; }
+        public ICommand QuitCommand { get; }
 
         public GameViewModel(MainWindowViewModel mainWindowViewModel, IPlayablePuzzle playablePuzzle)
         {
-            this.Start(mainWindowViewModel, PlayablePuzzle);
+            this.Start(mainWindowViewModel, playablePuzzle);
+            this.BackCommand = new BackCommand(mainWindowViewModel);
+            this.QuitCommand = new QuitCommand(mainWindowViewModel);
         }
 
         public void Start(MainWindowViewModel mainWindowViewModel, IPlayablePuzzle puzzle)
@@ -60,41 +68,6 @@ namespace ViewModel
 
         public ICommand ClickCommand { get; private set; }
         public MainWindowViewModel Vm { get; private set; }
-        public IGrid<PlayablePuzzleSquareViewModel> Grid { get; private set; }
-
-        public class ClickRectangle : ICommand
-        {
-            private GameViewModel viewModelMainWindow;
-
-            public ClickRectangle(GameViewModel viewModelMainWindow)
-            {
-                vm = viewModelMainWindow;
-                canExcecute = true;
-            }
-
-            private GameViewModel vm;
-            private bool canExcecute;
-
-            public EventHandler CanExecuteChange;
-
-            public event EventHandler CanExecuteChanged;
-
-
-            private void ChangeValue(IPlayablePuzzleSquare square)
-            {
-               
-            }
-
-            public bool CanExecute(object parameter)
-            {
-                return canExcecute;
-            }
-
-            public void Execute(object parameter)
-            {
-                var square = parameter as IPlayablePuzzleSquare;
-                ChangeValue(square);
-            }
-        }
+        public IGrid<PlayablePuzzleSquareViewModel> Grid { get; private set; }                                                                  
     }
 }

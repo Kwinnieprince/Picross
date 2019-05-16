@@ -22,8 +22,15 @@ namespace View
 
             MainWindowViewModel vm = new MainWindowViewModel();
 
+            vm.ClosingAction += MainViewModel_ApplicationExit;
+
             mainWindow.DataContext = vm;
             mainWindow.Show();
+        }
+
+        private void MainViewModel_ApplicationExit()
+        {
+            Application.Current.Shutdown();
         }
     }
 }

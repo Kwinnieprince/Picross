@@ -13,10 +13,15 @@ namespace ViewModel
         public MainWindowViewModel()
         {
             this.ActiveWindow = new StartScreenViewModel(this);
+            this.PiCrossFacade = new PiCrossFacade();
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
         private object activeWindow;
+
+        public PiCrossFacade PiCrossFacade { get; }
+
+        public Action ClosingAction { get; set; }
 
         public object ActiveWindow
         {
@@ -43,7 +48,19 @@ namespace ViewModel
 
         public void ChooseGame()
         {
-
+            this.ActiveWindow = new ChooseWindowViewModel(this);
         }
+
+        public void StartView()
+        {
+            this.ActiveWindow = new StartScreenViewModel(this);
+        }
+
+        public void CloseWindow()
+        {
+            this.ClosingAction?.Invoke();
+        }
+
+
     }
 }

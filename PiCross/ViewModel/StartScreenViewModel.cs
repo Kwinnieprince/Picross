@@ -15,7 +15,7 @@ namespace ViewModel
             this.vm = mainWindowView;
             this.Start = new StartCommand(this.vm);
             this.Choose = new ChooseCommand(this.vm);
-            this.Quit = new QuitCommand(this.vm);
+            this.QuitCommand = new QuitCommand(this.vm);
         }
 
         private MainWindowViewModel vm { get; }
@@ -24,7 +24,7 @@ namespace ViewModel
 
         public ICommand Choose { get; }
 
-        public ICommand Quit { get; }
+        public ICommand QuitCommand { get; }
 
         public event PropertyChangedEventHandler propertyChanged;
     }
@@ -107,7 +107,7 @@ namespace ViewModel
 
         public QuitCommand(MainWindowViewModel vm)
         {
-            //viewModelMainWindow = vm;
+            mainWindowViewModel = vm;
             canExecute = true;
         }
 
@@ -118,7 +118,7 @@ namespace ViewModel
 
         public void Execute(object parameter)
         {
-            
+            this.mainWindowViewModel.CloseWindow();
         }
 
     }

@@ -7,27 +7,32 @@
         xmlns:controls="clr-namespace:View.Controls"
         xmlns:converters="clr-namespace:View.Converters"
         mc:Ignorable="d"
-        Height="350" Width="525">
+        Height="450" Width="800">
     <UserControl.Resources>
-        <converters:SquareConverter Empty="White" Filled="Black" Unknown="Gray" x:Key="converter"/>
+        <converters:SquareConverter Empty="White" Filled="Black" Unknown="Gray" x:Key="squareConverter"/>
         <converters:ConstraintConverter True="Transparent" False="Black" x:Key="constraintConverter"/>
         <converters:BoolConverter x:Key="boolConverter"/>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Background="#335E82">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <TextBlock Text="PiCross" Grid.Row="0" HorizontalAlignment="Center" FontSize="15" FontWeight="DemiBold" Padding="10 13 10 10" />
+        <TextBlock Text="PiCross Game" Grid.Row="0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Padding="10 13 10 10" Foreground="#B55F35" Grid.ColumnSpan="2" Grid.RowSpan="2" />
 
-        <controls:PiCrossControl x:Name="PicrossControl"  Grid.Row="1" HorizontalAlignment="Center" Grid="{Binding Grid}" RowConstraints="{Binding PlayablePuzzle.RowConstraints}" ColumnConstraints="{Binding PlayablePuzzle.ColumnConstraints}">
+        <controls:PiCrossControl x:Name="PicrossControl"  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Grid="{Binding Grid}" RowConstraints="{Binding PlayablePuzzle.RowConstraints}" ColumnConstraints="{Binding PlayablePuzzle.ColumnConstraints}">
             <controls:PiCrossControl.SquareTemplate>
                 <DataTemplate>
-                    <Button CommandParameter="{Binding PuzzleSquare}" Command="{Binding Cycle}">
+                    <Button CommandParameter="{Binding PuzzleSquare}" Command="{Binding CycleCommand}" BorderBrush="#B55F35" HorizontalAlignment="Center">
                         <Button.Content>
-                            <Rectangle Width="32" Height="32" Stroke="Black" Fill="{Binding Contents.Value, Converter={StaticResource converter}}"/>
+                            <Rectangle Width="32" Height="32" Stroke="Black" Fill="{Binding Contents.Value, Converter={StaticResource squareConverter}}"/>
                         </Button.Content>
                     </Button>
                 </DataTemplate>
@@ -42,14 +47,14 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Width="32" Height="32" Text="{Binding Value}" Foreground="{Binding IsSatisfied.Value, Converter={StaticResource constraintConverter}}">
-                                    <TextBlock.Background>
+                                <TextBlock Width="32" Height="32" Text="{Binding Value}" FontSize="15">
+                                    <TextBlock.Foreground>
                                         <Binding Path="IsSatisfied.Value">
                                             <Binding.Converter>
-                                                <converters:BoolConverter True="Transparant" False="Purple" />
+                                                <converters:BoolConverter True="Transparant" False="#B55F35" />
                                             </Binding.Converter>
                                         </Binding>
-                                    </TextBlock.Background>
+                                    </TextBlock.Foreground>
                                 </TextBlock>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -66,14 +71,14 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Width="32" Height="32" Text="{Binding Value}" Foreground="{Binding IsSatisfied.Value, Converter={StaticResource constraintConverter}}">
-                                    <TextBlock.Background>
+                                <TextBlock Width="32" Height="32" Text="{Binding Value}" FontSize="15">
+                                    <TextBlock.Foreground>
                                         <Binding Path="IsSatisfied.Value">
                                             <Binding.Converter>
-                                                <converters:BoolConverter True="Transparant" False="Purple" />
+                                                <converters:BoolConverter True="White" False="#B55F35" />
                                             </Binding.Converter>
                                         </Binding>
-                                    </TextBlock.Background>
+                                    </TextBlock.Foreground>
                                 </TextBlock>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -81,11 +86,11 @@
                 </DataTemplate>
             </controls:PiCrossControl.ColumnConstraintsTemplate>
         </controls:PiCrossControl>
-        <Border HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.RowSpan="2">
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.RowSpan="3" Grid.ColumnSpan="2" Height="450" Width="800">
             <Border.Background>
-                <SolidColorBrush Color="#DDDDDD" Opacity=".5" />
+                <SolidColorBrush Color="#DDDDDD" Opacity=".7" />
             </Border.Background>
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="100" Text="Solved 💩" Foreground="Yellow" FontWeight="Bold" Grid.Row="1"/>
+            <TextBlock   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="100" Text="Solved 💩" Foreground="Yellow" FontWeight="Bold" Grid.Row="1"/>
             <Border.Visibility>
                 <Binding Path="IsSolved.Value">
                     <Binding.Converter>
@@ -94,5 +99,33 @@
                 </Binding>
             </Border.Visibility>
         </Border>
+        <Button BorderBrush="#B55F35" BorderThickness="2" Background="#264662" Grid.Row="0" Grid.Column="0" Command="{Binding QuitCommand}" Height="20" Width="46" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Border>
+                <TextBlock Foreground="Wheat" Text="Quit" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="PreviewMouseDown">
+                            <SoundPlayerAction Source="pack://application:,,,/Assets/beep.wav" />
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button BorderBrush="#B55F35" BorderThickness="2" Background="#264662" Grid.Row="1" Grid.Column="0" Command="{Binding BackCommand}" Height="20" Width="46" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Border>
+                <TextBlock Foreground="Wheat" Text="Back" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="PreviewMouseDown">
+                            <SoundPlayerAction Source="pack://application:,,,/Assets/beep.wav" />
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 </UserControl>

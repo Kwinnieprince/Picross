@@ -9,12 +9,18 @@
         mc:Ignorable="d"
         Height="450" Width="800">
 
-    <Grid Background="DarkOliveGreen">
+    <Grid Background="SteelBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="Play" Command="{Binding Start}" />
-            <Button Content="Choose" Command="{Binding Choose}" />
-            <Button Content="Quit" Command="{Binding Quit}" />
+        <TextBlock Background="SteelBlue" Text="Picross game" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" FontSize="30" FontFamily="Times New Roman Bold"/>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2">
+            <Button Background="#E87943" FontSize="50" FontFamily="Consolas" Content="Play" Command="{Binding Start}" />
+            <Button Background="#C1625F" FontSize="50" FontFamily="Comic Sans MS" Content="Choose" Command="{Binding Choose}" />
+            <Button Background="PaleVioletRed" FontSize="50" FontFamily="Consolas" Content="Quit" Command="{Binding QuitCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>

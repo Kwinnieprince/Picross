@@ -13,7 +13,7 @@ namespace ViewModel
     public class PlayablePuzzleSquareViewModel
     {
         public IPlayablePuzzleSquare PuzzleSquare { get; }
-        public ICommand Cycle { get; }
+        public ICommand CycleCommand { get; }
         public Cell<Square> Contents
         {
             get
@@ -25,7 +25,9 @@ namespace ViewModel
         public PlayablePuzzleSquareViewModel(IPlayablePuzzleSquare puzzleSquare)
         {
             this.PuzzleSquare = puzzleSquare;
+            this.CycleCommand = new CycleCommand(this);
         }
+
     }
 
     public class CycleCommand : ICommand
@@ -42,7 +44,7 @@ namespace ViewModel
 
         public bool CanExecute(object parameter)
         {
-            return canExcecute;
+            return true;
         }
 
         public void Execute(object parameter)
