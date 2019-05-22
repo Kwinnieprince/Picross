@@ -7,15 +7,15 @@
         xmlns:controls ="clr-namespace:View.Controls"
         xmlns:converters ="clr-namespace:View.Converters"
         mc:Ignorable="d"
-        Height="450" Width="800">
+        Height="600" Width="1000">
 
     <Grid Background="SteelBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="70"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Background="SteelBlue" Text="Picross game" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" FontSize="30" FontFamily="Times New Roman Bold"/>
+        <TextBlock Background="SteelBlue" Text="Picross game" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" FontSize="30" FontFamily="Times New Roman Bold" Padding="0 10 0 0"/>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2">
             <Button Background="#E87943" FontSize="50" FontFamily="Consolas" Content="Play" Command="{Binding Start}" />

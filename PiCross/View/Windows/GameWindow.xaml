@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:View"
         xmlns:controls="clr-namespace:View.Controls"
         xmlns:converters="clr-namespace:View.Converters"
         mc:Ignorable="d"
-        Height="450" Width="800">
+        Height="600" Width="1000">
     <UserControl.Resources>
         <converters:SquareConverter Empty="White" Filled="Black" Unknown="Gray" x:Key="squareConverter"/>
         <converters:ConstraintConverter True="Transparent" False="Black" x:Key="constraintConverter"/>
@@ -18,16 +19,18 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="125"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="PiCross Game" Grid.Row="0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Padding="10 13 10 10" Foreground="#B55F35" Grid.ColumnSpan="2" Grid.RowSpan="2" />
 
-        <controls:PiCrossControl x:Name="PicrossControl"  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Grid="{Binding Grid}" RowConstraints="{Binding PlayablePuzzle.RowConstraints}" ColumnConstraints="{Binding PlayablePuzzle.ColumnConstraints}">
+        <controls:PiCrossControl x:Name="PicrossControl"  Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Grid="{Binding Grid}" RowConstraints="{Binding PlayablePuzzle.RowConstraints}" ColumnConstraints="{Binding PlayablePuzzle.ColumnConstraints}">
             <controls:PiCrossControl.SquareTemplate>
                 <DataTemplate>
                     <Button CommandParameter="{Binding PuzzleSquare}" Command="{Binding CycleCommand}" BorderBrush="#B55F35" HorizontalAlignment="Center">
@@ -86,7 +89,7 @@
                 </DataTemplate>
             </controls:PiCrossControl.ColumnConstraintsTemplate>
         </controls:PiCrossControl>
-        <Border HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.RowSpan="3" Grid.ColumnSpan="2" Height="450" Width="800">
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="5" Grid.ColumnSpan="2" >
             <Border.Background>
                 <SolidColorBrush Color="#DDDDDD" Opacity=".7" />
             </Border.Background>
@@ -99,7 +102,7 @@
                 </Binding>
             </Border.Visibility>
         </Border>
-        <Button BorderBrush="#B55F35" BorderThickness="2" Background="#264662" Grid.Row="0" Grid.Column="0" Command="{Binding QuitCommand}" Height="20" Width="46" HorizontalAlignment="Right" VerticalAlignment="Center">
+        <Button BorderBrush="#B55F35" BorderThickness="2" Background="#264662" Grid.Row="0" Grid.Column="0" Command="{Binding QuitCommand}" Height="20" Width="46" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5 0 0 0">
             <Border>
                 <TextBlock Foreground="Wheat" Text="Quit" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
@@ -113,7 +116,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button BorderBrush="#B55F35" BorderThickness="2" Background="#264662" Grid.Row="1" Grid.Column="0" Command="{Binding BackCommand}" Height="20" Width="46" HorizontalAlignment="Right" VerticalAlignment="Center">
+        <Button BorderBrush="#B55F35" BorderThickness="2" Background="#264662" Grid.Row="1" Grid.Column="0" Command="{Binding BackCommand}" Height="20" Width="46" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5 0 0 0">
             <Border>
                 <TextBlock Foreground="Wheat" Text="Back" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
@@ -127,5 +130,8 @@
                 </Style>
             </Button.Style>
         </Button>
+        <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now},
+                  StringFormat='{}{0:dd-MM-yyyy hh:mm}'}" Grid.Row="2" FontWeight="Bold" Foreground="#B55F35" Margin="5 5 0 0"/>
+        <TextBlock Text="{Binding CurrentTime}" Grid.Row="3" FontWeight="Bold" Margin="5 5 0 0"/>
     </Grid>
 </UserControl>

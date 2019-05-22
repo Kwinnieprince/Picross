@@ -13,9 +13,9 @@ namespace ViewModel
         public StartScreenViewModel(MainWindowViewModel mainWindowView)
         {
             this.vm = mainWindowView;
-            this.Start = new StartCommand(this.vm);
-            this.Choose = new ChooseCommand(this.vm);
-            this.QuitCommand = new QuitCommand(this.vm);
+            this.Start = new EasyCommand(() => this.vm.StartGame());
+            this.Choose = new EasyCommand(() => this.vm.ChooseGame());
+            this.QuitCommand = new EasyCommand(() => this.vm.CloseWindow());
         }
 
         private MainWindowViewModel vm { get; }
@@ -27,99 +27,5 @@ namespace ViewModel
         public ICommand QuitCommand { get; }
 
         public event PropertyChangedEventHandler propertyChanged;
-    }
-    public class StartCommand : ICommand
-    {
-        public object activewindow;
-
-        public event EventHandler CanExecuteChanged;
-        public MainWindowViewModel mainWindowViewModel;
-        private bool canExecute;
-
-        public StartCommand(MainWindowViewModel vm)
-        {
-            mainWindowViewModel = vm;
-            canExecute = true;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return canExecute;
-        }
-
-        public void Execute(object parameter)
-        {
-            mainWindowViewModel.StartGame();
-        }
-
-
-    }
-    public class ChooseCommand : ICommand
-    {
-
-        public event PropertyChangedEventHandler propertyChanged;
-
-        public event EventHandler CanExecuteChanged;
-        public MainWindowViewModel mainWindowViewModel;
-        private bool canExecute;
-
-        public ChooseCommand(MainWindowViewModel vm)
-        {
-            mainWindowViewModel = vm;
-            canExecute = true;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return canExecute;
-        }
-
-        public void Execute(object parameter)
-        {
-            mainWindowViewModel.ChooseGame();
-        }
-    }
-
-    public class QuitCommand : ICommand
-    {
-
-        public event PropertyChangedEventHandler propertyChanged;
-
-        private object activeWindow;
-
-        public object ActiveWindow
-        {
-            get
-            {
-                return activeWindow;
-            }
-
-            set
-            {
-                activeWindow = value;
-                propertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(activeWindow)));
-            }
-        }
-
-        public event EventHandler CanExecuteChanged;
-        public MainWindowViewModel mainWindowViewModel;
-        private bool canExecute;
-
-        public QuitCommand(MainWindowViewModel vm)
-        {
-            mainWindowViewModel = vm;
-            canExecute = true;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return canExecute;
-        }
-
-        public void Execute(object parameter)
-        {
-            this.mainWindowViewModel.CloseWindow();
-        }
-
     }
 }

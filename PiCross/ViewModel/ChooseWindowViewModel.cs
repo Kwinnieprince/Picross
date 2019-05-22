@@ -53,8 +53,8 @@ namespace ViewModel
             }
 
             this.ChoosePuzzleCommand = new ChoosePuzzleCommand(mainWindowViewModel);
-            this.BackCommand = new BackCommand(mainWindowViewModel);
-            this.QuitCommand = new QuitCommand(mainWindowViewModel);
+            this.BackCommand = new EasyCommand(() => this.vm.StartView());
+            this.QuitCommand = new EasyCommand(() => this.vm.CloseWindow()); 
         }
 
         public PiCrossFacade Facade;
@@ -87,29 +87,6 @@ namespace ViewModel
         {
             var puzzle = parameter as IPlayablePuzzle;
             this.vm.StartGame(puzzle);
-        }
-    }
-
-    public class BackCommand : ICommand
-    {
-        private MainWindowViewModel vm { get; }
-        private bool _canExecute;
-        public event EventHandler CanExecuteChanged;
-
-        public BackCommand(MainWindowViewModel mainWindowViewModel)
-        {
-            vm = mainWindowViewModel;
-            _canExecute = true;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute;
-        }
-
-        public void Execute(object parameter)
-        {
-            this.vm.StartView();
         }
     }
 }

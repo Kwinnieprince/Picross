@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View.Windows"
         mc:Ignorable="d"
-        Height="450" Width="800">
+        Height="600" Width="1000">
     
     <Grid Background="#89afcf">
         <Grid.RowDefinitions>
@@ -17,14 +17,14 @@
             <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Choose Game" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="Comic Sans MS" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-        <ItemsControl ItemsSource="{Binding Puzzles}" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="3">
+        <TextBlock Text="Choose Game" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Bold" FontFamily="Comic Sans MS" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Padding="0 10 0 0"/>
+        <ItemsControl ItemsSource="{Binding Puzzles}" Grid.Row="2" Grid.ColumnSpan="2" Padding="0 20 0 0 ">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Viewbox Width="100" Height="100">
+                    <Viewbox Width="120" Height="80">
                         <Button Background="#264662" BorderBrush="#264662" CommandParameter="{Binding}" Command="{Binding DataContext.ChoosePuzzleCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ChooseWindow}}}">
                             <Border>
-                                <TextBlock Background="#264662" Foreground="PapayaWhip" Text="{Binding Grid.Size}" TextAlignment="Center"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="20" Height="40" Width="150"/>
+                                <TextBlock Background="#264662" Foreground="PapayaWhip" Text="{Binding Grid.Size}" TextAlignment="Center"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="20" Height="40" Width="190"/>
                             </Border>
                         </Button>
                     </Viewbox>
@@ -35,11 +35,29 @@
             <Border>
                 <TextBlock Foreground="Wheat" Text="Quit" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="PreviewMouseDown">
+                            <SoundPlayerAction Source="pack://application:,,,/Assets/beep.wav" />
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
         </Button>
         <Button BorderBrush="#B55F35" BorderThickness="2" Background="#264662" Grid.Row="1" Grid.Column="0" Command="{Binding BackCommand}" Height="20" Width="46" HorizontalAlignment="Right" VerticalAlignment="Center">
             <Border>
                 <TextBlock Foreground="Wheat" Text="Back" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="PreviewMouseDown">
+                            <SoundPlayerAction Source="pack://application:,,,/Assets/beep.wav" />
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
         </Button>
     </Grid>
 </UserControl>
