@@ -1,22 +1,19 @@
 ﻿using Cells;
 using DataStructures;
+using Microsoft.Practices.ServiceLocation;
 using PiCross;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Threading;
-using Utility;
 using Grid = DataStructures.Grid;
 
 
 namespace ViewModel
 {
-    public class GameViewModel
+    public class GameViewModel : INotifyPropertyChanged
     {
         public GameViewModel(MainWindowViewModel mainWindowViewModel)
         {
@@ -39,7 +36,6 @@ namespace ViewModel
             this.BackCommand = new EasyCommand(() => this.vm.StartView());
             this.QuitCommand = new EasyCommand(() => this.vm.CloseWindow());
 
-            this.StartTimer();
         }
 
         public ICommand BackCommand { get; }
@@ -62,6 +58,7 @@ namespace ViewModel
             this.Vm = mainWindowViewModel;
             this.PlayablePuzzle = puzzle;
             this.Grid = this.PlayablePuzzle.Grid.Map(puzzleSquare => new PlayablePuzzleSquareViewModel(puzzleSquare)).Copy();
+            this.StartTimer();
         }
 
         public Cell<bool> IsSolved
@@ -98,10 +95,7 @@ namespace ViewModel
         public ICommand ClickCommand { get; private set; }
         public MainWindowViewModel Vm { get; private set; }
         public IGrid<PlayablePuzzleSquareViewModel> Grid { get; private set; }
-
-        private DispatcherTimer timer;
         private double currentTime;
-        public event PropertyChangedEventHandler OnPropertyChanged;
 
         public double CurrentTime
         {
@@ -112,20 +106,19 @@ namespace ViewModel
             set
             {
                 currentTime = value;
-                OnPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentTime)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentTime)));
             }
         }
 
-        private void StartTimer()
+
+        public void StartTimer()
         {
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(1000);
-            timer.Tick += new EventHandler(timer_Tick);
-            CurrentTime = 0;
-            timer.Start();
+            var timer = ServiceLocator.Current.GetInstance<ITimerService>();
+            timer.Tick += Timer_Tick;
+            timer.Start(new TimeSpan(0, 0, 0, 0, 1000));
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(ITimerService obj)
         {
             CurrentTime += 1;
         }
