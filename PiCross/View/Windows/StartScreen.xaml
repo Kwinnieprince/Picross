@@ -9,11 +9,17 @@
         mc:Ignorable="d"
         Height="600" Width="1000">
 
-    <Grid Background="SteelBlue">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0,3" StartPoint="0,0">
+                <GradientStop Color="SteelBlue" Offset="0"/>
+                <GradientStop Color="#E87943" Offset="0.567"/>
+            </LinearGradientBrush>
+        </Grid.Background>
 
         <TextBlock Background="SteelBlue" Text="Picross game" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" FontSize="30" FontFamily="Times New Roman Bold" Padding="0 10 0 0"/>
         

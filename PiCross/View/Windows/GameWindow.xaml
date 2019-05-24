@@ -133,5 +133,6 @@
         <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now},
                   StringFormat='{}{0:dd-MM-yyyy hh:mm}'}" Grid.Row="2" FontWeight="Bold" Foreground="#B55F35" Margin="5 5 0 0"/>
         <TextBlock Text="{Binding CurrentTime}" Grid.Row="3" FontWeight="Bold" Margin="5 5 0 0"/>
+        <TextBlock Text="Seconds" Grid.Row="3" FontWeight="Bold" Margin="5 5 20 0" HorizontalAlignment="Right"/>
     </Grid>
 </UserControl>

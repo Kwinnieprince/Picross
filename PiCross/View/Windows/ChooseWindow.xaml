@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Height="600" Width="1000">
     
-    <Grid Background="#89afcf">
+    <Grid Background="SteelBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>

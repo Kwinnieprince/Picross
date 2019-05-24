@@ -48,17 +48,19 @@ namespace ViewModel
         {
             this.MainWindowViewModel = mainWindowViewModel;
             this.Start(mainWindowViewModel, playablePuzzle);
+            this.StartTimer();
             this.BackCommand = new EasyCommand(() => this.MainWindowViewModel.StartView());
             this.QuitCommand = new EasyCommand(() => this.MainWindowViewModel.CloseWindow());
-            this.StartTimer();
+            
         }
 
         public void Start(MainWindowViewModel mainWindowViewModel, IPlayablePuzzle puzzle)
         {
             this.Vm = mainWindowViewModel;
+            this.StartTimer();
             this.PlayablePuzzle = puzzle;
             this.Grid = this.PlayablePuzzle.Grid.Map(puzzleSquare => new PlayablePuzzleSquareViewModel(puzzleSquare)).Copy();
-            this.StartTimer();
+            
         }
 
         public Cell<bool> IsSolved
@@ -115,7 +117,7 @@ namespace ViewModel
         {
             var timer = ServiceLocator.Current.GetInstance<ITimerService>();
             timer.Tick += Timer_Tick;
-            timer.Start(new TimeSpan(0, 0, 0, 0, 1000));
+            timer.Start(new TimeSpan(0, 0, 0, 1, 0));
         }
 
         private void Timer_Tick(ITimerService obj)
